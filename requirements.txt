@@ -4,3 +4,4 @@ pyromod
 TgCrypto
 sqlalchemy
 psycopg2
+dateutil
