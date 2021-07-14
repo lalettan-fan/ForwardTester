@@ -1,0 +1,6 @@
+telethon
+pyrogram
+pyromod
+TgCrypto
+sqlalchemy
+psycopg2
