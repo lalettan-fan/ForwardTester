@@ -24,11 +24,12 @@ def media_type(message):
 
 
 async def copy_or_forward(bot,from_,to,msg,tag):
-    extra_sleep = 60 * 10
+    extra_sleep = 60 * 60
     count = db.get('COUNT')
     if tag == 'copy':
         try:
             await bot.client.send_message(to,msg)
+            await sleep(3)
             db.put('COUNT',str(int(count)+1))
             db.put('LAST', msg.id)
         except FloodWaitError as e:
@@ -37,6 +38,7 @@ async def copy_or_forward(bot,from_,to,msg,tag):
             await sleep(extra_sleep)
             print('Starting after FloodWaitError')
             await bot.client.send_message(to, msg)
+            await sleep(3)
             db.put('COUNT', str(int(count) + 1))
             db.put('LAST', msg.id)
         except BaseException as e:
@@ -45,6 +47,7 @@ async def copy_or_forward(bot,from_,to,msg,tag):
     else:
         try:
             await bot.client.forward_messages(to,msg, from_)
+            await sleep(3)
             db.put('COUNT', str(int(count) + 1))
             db.put('LAST', msg.id)
         except FloodWaitError as e:
@@ -53,6 +56,7 @@ async def copy_or_forward(bot,from_,to,msg,tag):
             await sleep(extra_sleep)
             print('Starting after FloodWaitError')
             await bot.client.forward_messages(to, msg, from_)
+            await sleep(3)
             db.put('COUNT', str(int(count) + 1))
             db.put('LAST', msg.id)
         except BaseException as e:
@@ -88,6 +92,8 @@ async def forward(bot):
 
     if all == 'true':
         async for message in bot.client.iter_messages(from_chat,reverse=True,min_id=from_msg,max_id=to_msg):
+            if int(db.get('COUNT')) % 5950 == 0:
+                await sleep(60*60*6)
             await copy_or_forward(bot,from_chat,to_chat,message,tag)
     else:
         type = []
@@ -105,4 +111,6 @@ async def forward(bot):
             return
         async for message in bot.client.iter_messages(from_chat,reverse=True,min_id=from_msg,max_id=to_msg):
             if media_type(message) in type:
+                if int(db.get('COUNT')) % 5950 == 0:
+                    await sleep(60 * 60 * 6)
                 await copy_or_forward(bot,from_chat,to_chat,message,tag)
