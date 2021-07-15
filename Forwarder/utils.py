@@ -76,13 +76,13 @@ async def forward(bot):
     last = db.get('LAST')
 
     if to_msg == '0':
-        to_msg = None
+        to_msg = 0
     else:
         to_msg = int(to_msg)
     if last != '0':
         from_msg = int(last)
     elif from_msg == '0':
-        from_msg = None
+        from_msg = 0
     else:
         from_msg = int(from_msg)-1
 
