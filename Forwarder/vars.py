@@ -105,7 +105,7 @@ class dbvars():
     def reset(self):
         edit_variable('STATUS', 'stopped')
         self.STATUS = 'stopped'
-        add_variable('TIME', '00')
+        edit_variable('TIME', '00')
         self.TIME = '00'
         edit_variable('FROM', '0')
         self.FROM = '0'
