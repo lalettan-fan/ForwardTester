@@ -50,6 +50,7 @@ async def forward_cmd(bot: Bot, message: Message):
 async def forward_start(bot: Bot, query:CallbackQuery):
     status = db.get('STATUS')
     if status == 'stopped':
+	print('starting.......')
         now = datetime.now()
         db.put('COUNT','0')
         db.put('TIME',str(now))
