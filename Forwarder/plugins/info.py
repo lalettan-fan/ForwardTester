@@ -45,9 +45,7 @@ async def restart(bot: Bot, message: Message):
 @Bot.on_message(filters.command('cancel') & filters.private & filters.admins)
 async def cancel(bot: Bot, message: Message):
     await message.reply('Cancelling all Forwarding and restarting.....')
-    db.put('LAST', '0')
-    db.put('STATUS', 'stopped')
-    db.put('TIME', '00')
+    db.reset()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 @Bot.on_message(filters.command('status') & filters.private & filters.admins)
@@ -56,3 +54,9 @@ async def status(bot: Bot, message: Message):
         await message.reply('Bot is Currently Forwarding files')
     else:
         await message.reply('Bot has completed all forwarding')
+
+@Bot.on_message(filters.command('vars') & filters.private & filters.admins)
+async def vars(bot: Bot, message: Message):
+    vars = db.all()
+    await message.reply(vars)
+    print(vars)

@@ -47,38 +47,38 @@ class dbvars():
         if find_variable('ALL'):
             self.ALL = get_variable('ALL')
         else:
-            add_variable('ALL', '0')
-            self.ALL = '0'
+            add_variable('ALL', 'false')
+            self.ALL = 'false'
 
         if find_variable('PHOTO'):
             self.PHOTO = get_variable('PHOTO')
         else:
-            add_variable('PHOTO', '0')
-            self.PHOTO = '0'
+            add_variable('PHOTO', 'false')
+            self.PHOTO = 'false'
 
         if find_variable('VIDEO'):
             self.VIDEO = get_variable('VIDEO')
         else:
-            add_variable('VIDEO', '0')
-            self.VIDEO = '0'
+            add_variable('VIDEO', 'false')
+            self.VIDEO = 'false'
 
         if find_variable('AUDIO'):
             self.AUDIO = get_variable('AUDIO')
         else:
-            add_variable('AUDIO', '0')
-            self.AUDIO = '0'
+            add_variable('AUDIO', 'false')
+            self.AUDIO = 'false'
 
         if find_variable('DOCUMENT'):
             self.DOCUMENT = get_variable('DOCUMENT')
         else:
-            add_variable('DOCUMENT', '0')
-            self.DOCUMENT = '0'
+            add_variable('DOCUMENT', 'false')
+            self.DOCUMENT = 'false'
 
         if find_variable('TEXT'):
             self.TEXT = get_variable('TEXT')
         else:
-            add_variable('TEXT', '0')
-            self.TEXT = '0'
+            add_variable('TEXT', 'false')
+            self.TEXT = 'false'
 
         if find_variable('TAG'):
             self.TAG = get_variable('TAG')
@@ -99,8 +99,39 @@ class dbvars():
         vars(self)[var] = value
         edit_variable(var,value)
 
-    def temp(self):
+    def all(self):
         return vars(self)
 
+    def reset(self):
+        edit_variable('STATUS', 'stopped')
+        self.STATUS = 'stopped'
+        add_variable('TIME', '00')
+        self.TIME = '00'
+        edit_variable('FROM', '0')
+        self.FROM = '0'
+        edit_variable('TO', '0')
+        self.TO = '0'
+        edit_variable('FROM_MSG', '0')
+        self.FROM_MSG = '0'
+        edit_variable('TO_MSG', '0')
+        self.TO_MSG = '0'
+        edit_variable('LAST', '0')
+        self.LAST = '0'
+        edit_variable('ALL', 'false')
+        self.ALL = 'false'
+        edit_variable('PHOTO', 'false')
+        self.PHOTO = 'false'
+        edit_variable('VIDEO', 'false')
+        self.VIDEO = 'false'
+        edit_variable('AUDIO', 'false')
+        self.AUDIO = 'false'
+        edit_variable('DOCUMENT', 'false')
+        self.DOCUMENT = 'false'
+        edit_variable('TEXT', 'false')
+        self.TEXT = 'false'
+        edit_variable('TAG', 'copy')
+        self.TAG = 'copy'
+        edit_variable('COUNT', '0')
+        self.COUNT = '0'
 
 db = dbvars()
