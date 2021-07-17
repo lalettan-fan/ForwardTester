@@ -88,7 +88,8 @@ async def forward(bot):
 
     if all == 'true':
         async for message in bot.client.iter_messages(from_chat,reverse=True,min_id=from_msg,max_id=to_msg):
-            if int(db.get('COUNT')) % 5000 == 0:
+            count = int(db.get('COUNT'))
+            if not count and count % 5000 == 0:
                 await sleep(60*60*6)
             await copy_or_forward(bot,from_chat,to_chat,message,tag)
     else:
@@ -107,6 +108,7 @@ async def forward(bot):
             return
         async for message in bot.client.iter_messages(from_chat,reverse=True,min_id=from_msg,max_id=to_msg):
             if media_type(message) in type:
-                if int(db.get('COUNT')) % 5000 == 0:
-                    await sleep(60 * 60 * 6)
+                count = int(db.get('COUNT'))
+                if not count and count % 5000 == 0:
+                    await sleep(60*60*6)
                 await copy_or_forward(bot,from_chat,to_chat,message,tag)
